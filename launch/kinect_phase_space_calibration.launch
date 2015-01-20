@@ -29,7 +29,7 @@
 	<!-- CALIBRATION -->
 	<param name="asus_frame" value="camera_rgb_optical_frame" /> <!-- with respect the ar marker is obtained -->
 	<param name="ar_marker_frame" value="ar_marker_60" /> <!-- 60 is the id of the ar marker used -->
-	<param name="phase_space_frame" value="world" />
+	<param name="phase_space_frame" value="phase_space_world" />
 	<param name="object_frame" value="calibrator"/>
 	<node name="asus_phase_space_calibrator" pkg="calibration" type="simple_calibrator" respawn="true" output="screen"/>
 

@@ -18,8 +18,12 @@ Mostly, we are using the Asus, but this package can be easily extended to consid
 
 And depending which of the cases below you are using, you might need the respective packages within.
 
-KUKA LWR and Asus in-hand and head calibratrion
------------------------------------------------
+KUKA LWR and Asus in-hand
+-------------------------
+
+
+KUKA LWR and head calibratrion
+------------------------------
 
 
 
