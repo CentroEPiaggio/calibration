@@ -1,5 +1,6 @@
 // ROS headers
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <std_srvs/Empty.h>
 #include <tf/transform_listener.h>
 #include <tf/transform_broadcaster.h>
@@ -8,6 +9,11 @@
 #include <geometry_msgs/TransformStamped.h>
 
 #include <Eigen/Eigen>
+#include <fstream>
+#include <string>
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 namespace calibration {
 
@@ -33,6 +39,9 @@ class SimpleCalibrator
         std::string phase_space_frame_;
         std::string object_frame_;
 
+        std::vector<double> kps_translation_;
+        std::vector<double> kps_rotation_;
+
     public:
         bool calibrate(std_srvs::Empty::Request &request, std_srvs::Empty::Response &response);
         void publishTf();
@@ -40,17 +49,18 @@ class SimpleCalibrator
         // constructor
         SimpleCalibrator(ros::NodeHandle nh) : nh_(nh), priv_nh_("~")
         {
-            // init the calibration to the identity to publish something
-            transform_.setOrigin( tf::Vector3( 0.0, 0.0, 0.0 ) );
-            tf::Quaternion q;
-            q.setRPY( 0.0, 0.0, 0.0 );
-            transform_.setRotation( q );
 
             // load the parameters
-            nh_.param<std::string>("asus_frame", asus_frame_, "/camera_rgb_optical_frame");
+            nh_.param<std::vector<double> >("kps_translation", kps_translation_, {0, 0, 0});
+            nh_.param<std::vector<double> >("kps_rotation", kps_rotation_, {0, 0, 0, 1});
+            nh_.param<std::string>("asus_frame", asus_frame_, "/camera_depth_optical_frame");
             nh_.param<std::string>("ar_marker_frame", ar_marker_frame_, "/ar_marker_60");
-            nh_.param<std::string>("phase_space_frame", phase_space_frame_, "/world");
+            nh_.param<std::string>("phase_space_frame", phase_space_frame_, "/phase_space_world");
             nh_.param<std::string>("object_frame", object_frame_, "/calibrator");
+            
+            // init the calibration to the identity to publish something
+            transform_.setOrigin( tf::Vector3( kps_translation_.at(0), kps_translation_.at(1), kps_translation_.at(2) ) );
+            transform_.setRotation( tf::Quaternion( kps_rotation_.at(0), kps_rotation_.at(1), kps_rotation_.at(2), kps_rotation_.at(3) ) );
 
             // advertise service
             srv_calibrate_ = nh_.advertiseService(nh_.resolveName("calibrate"), &SimpleCalibrator::calibrate, this);
@@ -88,12 +98,27 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
 
     // 3. since the reference frame is the same, we just need to inverse and multiply
     transform_ = ar_marker_frame*calibrator_frame.inverse();
+
+    //write this transform to a yaml file
+    std::string path = ros::package::getPath("calibration");
+    std::string file = path + "/config/kinect_phasespace.yaml";
+    std::cout<<file.c_str()<<std::endl;
+    std::ofstream f;
+    f.open(file.c_str());
+    if (f.is_open())
+    {
+      f << "kps_translation: ["<< transform_.getOrigin()[0]<<", "<< transform_.getOrigin()[1]<<", "<<transform_.getOrigin()[2]<<"]"
+        <<std::endl;
+      f << "kps_rotation: ["<<transform_.getRotation().getX()<<", "<<transform_.getRotation().getY()<<", "<<transform_.getRotation().getZ()<<", "<<transform_.getRotation().getW()<<"]"
+        <<std::endl;
+      f.close();
+    }
 }
 
 // this function is called as fast as ROS can from the main loop directly
 void SimpleCalibrator::publishTf()
 {
-    tf_broadcaster_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), asus_frame_, phase_space_frame_));
+    tf_broadcaster_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), asus_frame_, phase_space_frame_)); //from asus to phase space
 }
 
 } // namespace calibration
@@ -104,11 +129,13 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
 
     calibration::SimpleCalibrator node(nh);
+    ros::Rate rate(100.0); //go at 100Hz
 
-    while(ros::ok())
+    while(nh.ok())
     {
         node.publishTf();
         ros::spinOnce();
+        rate.sleep();
     }
 
     return 0;
