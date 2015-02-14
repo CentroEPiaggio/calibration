@@ -1,8 +1,0 @@
-<launch>
-
-  <rosparam command="load" file="$(find calibration)/config/kinect_phasespace.yaml" />
-  <param name="asus_frame" value="camera_depth_optical_frame" /> 
-  <param name="phase_space_frame" value="phase_space_world" />
-  <node pkg="calibration" type="simple_calibrator" name="kinect_phasespace_tf_broadcaster" respawn="true" output="screen" />
-
-</launch>

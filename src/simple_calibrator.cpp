@@ -34,13 +34,14 @@ class SimpleCalibrator
         // the looked transform
         tf::Transform transform_;
 
-        std::string asus_frame_;
+        std::string frame_id_;
         std::string ar_marker_frame_;
-        std::string phase_space_frame_;
-        std::string object_frame_;
+        std::string child_frame_id_;
+        std::string calibrator_frame_;
+        std::string calibration_name_;
 
-        std::vector<double> kps_translation_;
-        std::vector<double> kps_rotation_;
+        std::vector<double> translation_;
+        std::vector<double> rotation_;
 
     public:
         bool calibrate(std_srvs::Empty::Request &request, std_srvs::Empty::Response &response);
@@ -51,16 +52,17 @@ class SimpleCalibrator
         {
 
             // load the parameters
-            nh_.param<std::vector<double> >("kps_translation", kps_translation_, {0, 0, 0});
-            nh_.param<std::vector<double> >("kps_rotation", kps_rotation_, {0, 0, 0, 1});
-            nh_.param<std::string>("asus_frame", asus_frame_, "/camera_depth_optical_frame");
+            nh_.param<std::vector<double> >("translation", translation_, {0, 0, 0});
+            nh_.param<std::vector<double> >("rotation", rotation_, {0, 0, 0, 1});
+            nh_.param<std::string>("frame_id", frame_id_, "/camera_depth_optical_frame");
             nh_.param<std::string>("ar_marker_frame", ar_marker_frame_, "/ar_marker_60");
-            nh_.param<std::string>("phase_space_frame", phase_space_frame_, "/phase_space_world");
-            nh_.param<std::string>("object_frame", object_frame_, "/calibrator");
+            nh_.param<std::string>("child_frame_id", child_frame_id_, "/phase_space_world");
+            nh_.param<std::string>("calibrator_frame", calibrator_frame_, "/calibrator");
+            nh_.param<std::string>("calibration_name", calibration_name_, "asus_phase_space");
             
             // init the calibration to the identity to publish something
-            transform_.setOrigin( tf::Vector3( kps_translation_.at(0), kps_translation_.at(1), kps_translation_.at(2) ) );
-            transform_.setRotation( tf::Quaternion( kps_rotation_.at(0), kps_rotation_.at(1), kps_rotation_.at(2), kps_rotation_.at(3) ) );
+            transform_.setOrigin( tf::Vector3( translation_.at(0), translation_.at(1), translation_.at(2) ) );
+            transform_.setRotation( tf::Quaternion( rotation_.at(0), rotation_.at(1), rotation_.at(2), rotation_.at(3) ) );
 
             // advertise service
             srv_calibrate_ = nh_.advertiseService(nh_.resolveName("calibrate"), &SimpleCalibrator::calibrate, this);
@@ -77,7 +79,7 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
     // 1. get the ar marker frame in the asus frame
     tf::StampedTransform ar_marker_frame;
     try{
-        tf_listener_.lookupTransform(asus_frame_, ar_marker_frame_,  
+        tf_listener_.lookupTransform(frame_id_, ar_marker_frame_,  
                                ros::Time(0), ar_marker_frame);
     }
     catch (tf::TransformException ex){
@@ -88,7 +90,7 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
     // 2. get the calibrator object in the phase space frame
     tf::StampedTransform calibrator_frame;
     try{
-        tf_listener_.lookupTransform(phase_space_frame_, object_frame_,  
+        tf_listener_.lookupTransform(child_frame_id_, calibrator_frame_,  
                                ros::Time(0), calibrator_frame);
     }
     catch (tf::TransformException ex){
@@ -99,18 +101,26 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
     // 3. since the reference frame is the same, we just need to inverse and multiply
     transform_ = ar_marker_frame*calibrator_frame.inverse();
 
-    //write this transform to a yaml file
+    // 4. write the transform on a yaml file
     std::string path = ros::package::getPath("calibration");
-    std::string file = path + "/config/kinect_phasespace.yaml";
-    std::cout<<file.c_str()<<std::endl;
+    std::string file = path + "/config/" + calibration_name_ + ".yaml";
+    std::cout << file.c_str() << std::endl;
     std::ofstream f;
     f.open(file.c_str());
     if (f.is_open())
     {
-      f << "kps_translation: ["<< transform_.getOrigin()[0]<<", "<< transform_.getOrigin()[1]<<", "<<transform_.getOrigin()[2]<<"]"
-        <<std::endl;
-      f << "kps_rotation: ["<<transform_.getRotation().getX()<<", "<<transform_.getRotation().getY()<<", "<<transform_.getRotation().getZ()<<", "<<transform_.getRotation().getW()<<"]"
-        <<std::endl;
+      f << "# This file contains the values obtained by the calibration package" << std::endl;
+      f << "# Results are written in the form that they can be directly sent to a static_transform_publisher node" << std::endl;
+      f << "# Recall its usage use static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period(milliseconds)" << std::endl;
+      f << "translation: [" << transform_.getOrigin()[0] << ", " << 
+                          transform_.getOrigin()[1] << ", " << 
+                          transform_.getOrigin()[2]<<"]" << std::endl;
+      f << "rotation: [" << transform_.getRotation().getX() << ", " << 
+                            transform_.getRotation().getY() << ", " << 
+                            transform_.getRotation().getZ() << ", " << 
+                            transform_.getRotation().getW() << "]" << std::endl;
+      f << "frame_id: " << frame_id_.c_str() << std::endl;
+      f << "child_frame_id: " << child_frame_id_.c_str() << std::endl;
       f.close();
     }
 }
@@ -118,7 +128,7 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
 // this function is called as fast as ROS can from the main loop directly
 void SimpleCalibrator::publishTf()
 {
-    tf_broadcaster_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), asus_frame_, phase_space_frame_)); //from asus to phase space
+    tf_broadcaster_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), frame_id_, child_frame_id_)); //from asus to phase space
 }
 
 } // namespace calibration
