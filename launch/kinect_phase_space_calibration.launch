@@ -2,13 +2,13 @@
 
 	<!-- ASUS TOPICS -->
 	<!-- launch the ar tracker, units in cm, adjust at will -->
-	<arg name="marker_size" default="13.2" />
+	<arg name="marker_size" default="13.18" />
 	<arg name="max_new_marker_error" default="0.08" />
 	<arg name="max_track_error" default="0.2" />
 
 	<arg name="cam_image_topic" default="/camera/depth_registered/points" />
-	<arg name="cam_info_topic" default="/camera/rgb/camera_info" />		
-	<arg name="output_frame" default="/camera_link" />
+	<arg name="cam_info_topic" default="/camera/depth_registered/camera_info" />		
+	<arg name="output_frame" default="/camera_depth_optical_frame" />
 
 	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkers" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame)" />
 
@@ -26,8 +26,9 @@
 		<arg name="turn_phase_space_on" default="True" />
 	</include>
 
-	<!-- CALIBRATION -->
-	<param name="asus_frame" value="camera_rgb_optical_frame" /> <!-- with respect the ar marker is obtained -->
+  <!-- CALIBRATION -->
+  <rosparam command="load" file="$(find calibration)/config/kinect_phasespace.yaml" />
+	<param name="asus_frame" value="camera_depth_optical_frame" /> <!-- with respect the ar marker is obtained -->
 	<param name="ar_marker_frame" value="ar_marker_60" /> <!-- 60 is the id of the ar marker used -->
 	<param name="phase_space_frame" value="phase_space_world" />
 	<param name="object_frame" value="calibrator"/>

@@ -42,3 +42,7 @@ Asus phase-space calibration
 5. When you feel comfortable `rosservice call /calibrate` and don't move the calibrator.
 
 The transformation between the two systems is being published, check the `kinect_phase_space_calibration.launch` the names of the frames being used.
+
+The transformation will be saved into a yaml file inside 'config' directory and will be loaded at every package launch, until another `rosservice call /calibrate` overwrites it.
+
+After calibration is done and saved it can be broadcasted easly with `roslaunch calibration kinect_phase_space_broadcaster.launch`
