@@ -8,7 +8,6 @@
 #include <std_msgs/String.h>
 #include <geometry_msgs/TransformStamped.h>
 
-#include <Eigen/Eigen>
 #include <fstream>
 #include <string>
 #include <boost/filesystem.hpp>
