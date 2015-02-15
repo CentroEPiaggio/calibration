@@ -23,6 +23,10 @@
 	<!-- LOAD ROBOT DESCRIPTION AND HW -->
 
 	<!-- CALIBRATION SETUP -->
+
+	<!-- only one arm is required, since the two robots are in the same tf tree -->
+
+	<!-- use the right arm -->
 	<param name="frame_id" value="camera_depth_optical_frame" /> <!-- respect the ar marker is obtained with -->
 	<param name="ar_marker_frame" value="ar_marker_10" />
 	<param name="child_frame_id" value="world" />
@@ -30,7 +34,7 @@
 	<param name="calibration_name" value="$(arg calibration_name)"/>
 	<node name="right_kuka_camera_calibrator" pkg="calibration" type="simple_calibrator" respawn="true" output="screen"/>
 
-	<!-- only one is required, since the two robots are in the same tf tree, just let it here in case you use one or the other
+	<!-- use the right arm -->
 	<!--
 	<param name="frame_id" value="camera_depth_optical_frame" />
 	<param name="ar_marker_frame" value="ar_marker_20" />
