@@ -26,8 +26,7 @@ And depending which of the cases below you are using, you might need the respect
 
 3. Mount the 3D print on the robot such as the hole for the cables coincide with the cables of the KUKA when it is fully extend at home position.
 
-4. Place the marker print on the calibrator piece. Check the `X` and `Y` axes of the marker before placing it, and make `X` coincide with the cables. Consider that the axes are as shown in the image below.
-![pattern_axes](resources/pattern_axes.jpg)
+4. Place the marker print on the calibrator piece. Check the `X` and `Y` axes of the marker before placing it, and make `X` coincide with the cables. Consider that the axes are as shown in the image below. <br> <img src="resources/pattern_axes.png" alt="pattern_axes text" width="400px"/>
 
 5. `roslaunch calibration kinect_phase_space_calibration.launch`
 
@@ -47,11 +46,9 @@ After calibration is done you can kill the process. The saved calibration file c
 
 1. 3D print [this calibrator](resources/3DPrints/asus_phase_space_calibrator.stl) (only one arm is required, so print it once)
 
-2. Ensure the ar marker is well centered in the calibrator object. The reference frame of both are coincident to facilitate the reasoning. Check the axes as shown in the image below.
-![how_to](resources/how_to.jpg)
+2. Ensure the ar marker is well centered in the calibrator object. The reference frame of both are coincident to facilitate the reasoning. Check the axes as shown in the image below.<br> <img src="resources/how_to.jpg" alt="how_to text" width="400px"/>
 
-3. Glue the leds to the calibrator and confirm the LED ids as shown in the image below.
-![led_ids](resources/Led_ID.jpg)
+3. Glue the leds to the calibrator and confirm the LED ids as shown in the image below.<br> <img src="resources/Led_ID.jpg" alt="led_ids text" width="400px"/>
 
 4. Follow the instructions in the phase space package to track the "calibrator" object. Remember to check that the led ids correspond exactly to the ones mounted on the calibrator.
 
