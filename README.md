@@ -22,7 +22,7 @@ And depending which of the cases below you are using, you might need the respect
 
 1. 3D print [this calibrator](resources/3DPrints/asus_kuka_calibrator.stl) (only one arm is required, so print it once)
 
-2. Print any of the two markers `resources/MarkerPrints/KukaLeft_ID20.png` or `resources/MarkerPrints/KukaLeft_ID20.png`, depending on which arm you plan to use for calibration. NOTE: you must scale the print until the image is 15x15cm.
+2. Print any of the two markers `resources/MarkerPrints/KukaLeft_ID20.png` or `resources/MarkerPrints/KukaLeft_ID20.png`, depending on which arm you plan to use for calibration. NOTE: you must scale the print until the image is 10x10cm, but you need to cut a 15x15cm square with the image centered.
 
 3. Mount the 3D print on the robot such as the hole for the cables coincide with the cables of the KUKA when it is fully extend at home position.
 

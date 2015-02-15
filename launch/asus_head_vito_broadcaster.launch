@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="calibration_name" default="asus_head_vito_calib"/>
+
+  <rosparam command="load" file="$(find calibration)/config/asus_head_vito_calib.yaml" />
+  <param name="frame_id" value="camera_depth_optical_frame" />
+  <param name="child_frame_id" value="world" />
+  <param name="calibration_name" value="$(arg calibration_name)"/>
+  <node pkg="calibration" type="simple_calibrator" name="asus_head_vito_tf_broadcaster" respawn="true" output="screen" />
+
+</launch>
