@@ -44,7 +44,7 @@ After calibration is done you can kill the process. The saved calibration file c
 
 ## Asus phase-space calibration
 
-1. 3D print [this calibrator](resources/3DPrints/asus_phase_space_calibrator.stl) (only one arm is required, so print it once)
+1. 3D print [this calibrator](resources/3DPrints/asus_phasespace_calibrator.stl) (only one arm is required, so print it once)
 
 2. Ensure the ar marker is well centered in the calibrator object. The reference frame of both are coincident to facilitate the reasoning. Check the axes as shown in the image below.<br> <img src="resources/how_to.jpg" alt="how_to text" width="400px"/>
 
