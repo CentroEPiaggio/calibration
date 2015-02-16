@@ -16,9 +16,7 @@ Mostly, we are using the Asus, but this package can be easily extended to consid
 
 And depending which of the cases below you are using, you might need the respective packages within.
 
-## KUKA LWR and Asus in-hand
-
-## KUKA LWR and Asus head calibratrion
+## Asus head on Vito calibratrion
 
 1. 3D print [this calibrator](resources/3DPrints/asus_kuka_calibrator.stl) (only one arm is required, so print it once)
 
@@ -28,7 +26,7 @@ And depending which of the cases below you are using, you might need the respect
 
 4. Place the marker print on the calibrator piece. Check the `X` and `Y` axes of the marker before placing it, and make `X` coincide with the cables. Consider that the axes are as shown in the image below. <br> <img src="resources/pattern_axes.png" alt="pattern_axes text" width="400px"/>
 
-5. `roslaunch calibration kinect_phase_space_calibration.launch`
+5. `roslaunch calibration asus_head_vito_calibration.launch`
 
 6. Check on rviz that the calibrator is correctly being tracked by both systems, check the axes correspond to those of the pattern.
 
@@ -38,7 +36,7 @@ The transformation between the two systems is being published, check the `asus_h
 
 The transformation will be saved into a yaml file inside 'config' directory and will be loaded at every package launch, until another `rosservice call /calibrate` overwrites it.
 
-After calibration is done you can kill the process. The saved calibration file can be broadcasted with `roslaunch calibration asus_head_kuka_broadcaster.launch`
+After calibration is done you can kill the process. The saved calibration file can be broadcasted with `roslaunch calibration asus_head_vito_broadcaster.launch`
 
 
 
