@@ -40,13 +40,13 @@ After calibration is done you can kill the process. The saved calibration file c
 
 
 
-## Asus phase-space calibration
+## Asus PhaseSpace calibration
 
 1. 3D print [this calibrator](resources/3DPrints/asus_phasespace_calibrator.stl) (only one arm is required, so print it once)
 
 2. Ensure the ar marker is well centered in the calibrator object. The reference frame of both are coincident to facilitate the reasoning. Check the axes as shown in the image below.<br> <img src="resources/how_to.jpg" alt="how_to text" width="400px"/>
 
-3. Glue the leds to the calibrator and confirm the LED ids as shown in the image below.<br> <img src="resources/Led_ID.jpg" alt="led_ids text" width="400px"/>
+3. Glue the leds to the calibrator and take note of the LED ids as shown in the image below.<br> <img src="resources/Led_ID.jpg" alt="led_ids text" width="400px"/>
 
 4. Follow the instructions in the phase space package to track the "calibrator" object. Remember to check that the led ids correspond exactly to the ones mounted on the calibrator.
 
@@ -61,3 +61,25 @@ The transformation between the two systems is being published, check the `asus_p
 The transformation will be saved into a yaml file inside 'config' directory and will be loaded at every package launch, until another `rosservice call /calibrate` overwrites it.
 
 After calibration is done you can kill the process. The saved calibration file can be broadcasted with `roslaunch calibration asus_phase_space_broadcaster.launch`
+
+## Asus PhaseSpace calibration
+
+1. 3D print [this calibratior]() NOTE: find the star stl for printing to update the link
+
+2. Glue the leds to the calibrator and take note of the LED ids
+
+3. Glue the calibrator to the object you want to track.
+
+4. Follow the instructions in the phase space package to track the "calibrator" object. Remember to check that the led ids correspond exactly to the ones mounted on the calibrator.
+
+5. `roslaunch calibration tracker_object_calibration.launch`
+
+6. Check on rviz that the calibrator is correctly being tracked by both systems, check the axes correspond to those of the pattern.
+
+7. When you feel comfortable `rosservice call /calibrate` and don't move the calibrator.
+
+The transformation between the two systems is being published, check the `tracker_object_calibration.launch` the names of the frames being used.
+
+The transformation will be saved into a yaml file inside 'config' directory and will be loaded at every package launch, until another `rosservice call /calibrate` overwrites it.
+
+After calibration is done you can kill the process. The saved calibration file can be broadcasted with `roslaunch calibration tracker_object_broadcaster.launch`

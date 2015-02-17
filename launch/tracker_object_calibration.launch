@@ -1,0 +1,41 @@
+<launch>
+
+	<arg name="calibration_name" default="tracker_object_calib"/>
+
+	<!-- ASUS TOPICS -->
+	<!-- launch the ar tracker, units in cm, adjust at will -->
+	<arg name="marker_size" default="13.18" />
+	<arg name="max_new_marker_error" default="0.08" />
+	<arg name="max_track_error" default="0.2" />
+
+	<arg name="cam_image_topic" default="/camera/depth_registered/points" />
+	<arg name="cam_info_topic" default="/camera/depth_registered/camera_info" />
+	<arg name="output_frame" default="/camera_depth_optical_frame" />
+
+	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkers" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame)" />
+
+	<!-- launch the rgbd sensor, in this case using openni2 for the asus -->
+	<include file="$(find openni2_launch)/launch/openni2.launch">
+		<arg name="depth_registration" value="true" />
+		<arg name="color_depth_synchronization" value="true" />
+	</include>
+
+	<!-- OBJECT POSE ESTIMATION -->
+
+	<!-- PHASE SPACE TOPICS -->
+	<!-- track the calibrator with the phase space -->
+	<include file="$(find phase_space)/launch/track_object.launch">
+		<arg name="object" value="star" />
+		<arg name="turn_rviz_on" default="False" />
+		<arg name="turn_phase_space_on" default="True" />
+	</include>
+
+	<!-- CALIBRATION SETUP -->
+	<param name="frame_id" value="camera_depth_optical_frame" /> <!-- respect the ar marker is obtained with -->
+	<param name="ar_marker_frame" value="ar_marker_60" /> <!-- 60 is the id of the ar marker used -->
+	<param name="child_frame_id" value="phase_space_world" />
+	<param name="calibrator_frame" value="calibrator"/>
+	<param name="calibration_name" value="$(arg calibration_name)"/>
+	<node name="asus_phase_space_calibrator" pkg="calibration" type="simple_calibrator" respawn="true" output="screen"/>
+
+</launch>
