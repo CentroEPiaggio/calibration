@@ -2,10 +2,10 @@
 
   <arg name="calibration_name" default="asus_phase_space_calib"/>
 
-  <rosparam command="load" file="$(find calibration)/config/$(arg calibration_name).yaml" />
-  <param name="frame_id" value="camera_depth_optical_frame" />
-  <param name="child_frame_id" value="phase_space_world" />
-  <param name="calibration_name" value="$(arg calibration_name)"/>
-  <node pkg="calibration" type="simple_calibrator" name="asus_phasespace_tf_broadcaster" respawn="true" output="screen" />
+  <group ns="asus_phasespace">
+  	<rosparam command="load" file="$(find calibration)/config/$(arg calibration_name).yaml" />
+  	<param name="calibration_name" value="$(arg calibration_name)"/>
+  	<node pkg="calibration" type="simple_calibrator" name="asus_phasespace_tf_broadcaster" respawn="true" output="screen" />
+  </group>
 
 </launch>

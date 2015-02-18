@@ -103,7 +103,7 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
     // 4. write the transform on a yaml file
     std::string path = ros::package::getPath("calibration");
     std::string file = path + "/config/" + calibration_name_ + ".yaml";
-    std::cout << file.c_str() << std::endl;
+    //std::cout << file.c_str() << std::endl;
     std::ofstream f;
     f.open(file.c_str());
     if (f.is_open())
@@ -122,6 +122,7 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
       f << "child_frame_id: " << child_frame_id_.c_str() << std::endl;
       f.close();
     }
+    return true;
 }
 
 // this function is called as fast as ROS can from the main loop directly
