@@ -47,8 +47,24 @@ The transformation between the two systems is saved inot a yaml file inside 'con
 
 ## PS-Tracker/Object calibration
 
+### TODO add software to download and software setup, divide everything in initial setup and actual procedure
+
 1. 3D print [this calibratior]() NOTE: find the star stl for printing to update the link
 
+2. Glue the leds with IDs as in the figure below, make sure ID7 is on top of the star, pairs ID8-ID11 and ID9-ID10 are opposite to each other. Finally also make sure ID9 is on the right of ID8 and next to it. <br> <img src="resources/Star_Led_ID.jpg" alt="star_led_id text" width="400px"/>
+
+3. Glue the star on the object you want to track. The star position should be placed so that leds are fully visible by the phase space system and the star doesn't affect the object shape too much when viewed by the Asus rgb-d sensor.
+
+4. Put a table in the room centre and the object with the star attached to it on top of the table. Make sure the only thing on the table
+is the object you want to track, if needed hide the phase space equipments (cables, batteries, etc...) from the Asus rgb-d view. when you are satisfied with the layout don't move the table and the object anymore.
+
+5. Open a terminal and type `roslaunch calibration tracker_object_calibration.launch`, an rviz window will open.
+
+6. TODO view scene_filter parameters and adjust them to fit the table, so only the table and the object are visible by the Asus rgb-d.
+
+7. Open another terminal and type `rosservice call /pose_estimation_online estimate` a procedure for the object pose estimation will start. At the end the procedure (it will take a few seconds) a viewer will open picturing the estimation. Make sure the green pointcloud and the red one are visually aligned over each other as best as possible. If unsatisfied repeat this step until you see correct alignement. To help the process it could be useful to change the object position on the table a little bit.
+
+8. Finally to perform the calibration type `rosservice call /calibrate`, calibration correctness can be viewed directly on rviz or by killing the calibration node and by launching `roslaunch calibration tracker_object_broadcaster.launch`
 
 
 ## Dependencies
