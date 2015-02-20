@@ -29,7 +29,7 @@ The transformation between the two systems is saved inot a yaml file inside 'con
 
 1. Check wether [this calibrator](resources/3DPrints/asus_phasespace_calibrator.stl) is already available, otherwise 3D print it
 
-2. Print [this ar marker](resources/3DPrints/MakerPrints). NOTE: you must scale the print until the image is 10x10cm, but you need to cut the paper as a 13.20x13.20cm square with the image centered.
+2. Print [this ar marker](esources/MarkerPrints/KinectPhaseSpace_ID60.png). NOTE: you must scale the print until the image is 10x10cm, but you need to cut the paper as a 13.20x13.20cm square with the image centered.
 
 2. Glue [this ar marker](resources/3DPrints/MakerPrints) on [the calibrator](resources/3DPrints/asus_phasespace_calibrator.stl). Ensure the ar marker is well centered in the calibrator object as well as align with the axes of the calibrator as shown in the image below. It is important to note that the calibrator is not symmetric, take a look on the image: <br> <img src="resources/how_to.jpg" alt="how_to text" width="400px"/>
 
