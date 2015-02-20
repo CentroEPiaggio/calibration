@@ -111,6 +111,9 @@ add_library(calibration
 add_executable(simple_calibrator src/simple_calibrator.cpp)
 target_link_libraries(simple_calibrator ${catkin_LIBRARIES})
 
+add_executable(average_calibrator src/average_calibrator.cpp)
+target_link_libraries(average_calibrator ${catkin_LIBRARIES})
+
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(calibration_node calibration_generate_messages_cpp)

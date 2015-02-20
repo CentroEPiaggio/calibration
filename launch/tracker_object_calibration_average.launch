@@ -33,7 +33,7 @@
 		<param name="child_frame_id" value="object" />
 		<param name="calibrator_frame" value="star"/>
 		<param name="calibration_name" value="$(arg calibration_name)"/>
-		<node name="tracker_object_calib" pkg="calibration" type="simple_calibrator" respawn="true" output="screen" />
+		<node name="tracker_object_calib" pkg="calibration" type="average_calibrator" respawn="true" output="screen" />
 	</group>
 
 	<node name="myCustomTrackerRviz" launch-prefix="" pkg="rviz" type="rviz" respawn="false" args="-d $(find calibration)/launch/tracker_object.rviz" output="screen"/>

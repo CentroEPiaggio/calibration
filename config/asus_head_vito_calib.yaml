@@ -3,5 +3,5 @@
 # Recall its usage use static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period(milliseconds)
 translation: [0.0465254, 0.620123, 0.242935]
 rotation: [0.584896, 0.590053, -0.383804, 0.403025]
-frame_id: camera_depth_optical_frame
-child_frame_id: world
+frame_id: /camera_depth_optical_frame
+child_frame_id: /world

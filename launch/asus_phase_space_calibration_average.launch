@@ -35,7 +35,7 @@
 		<param name="child_frame_id" value="phase_space_world" />
 		<param name="calibrator_frame" value="calibrator"/>
 		<param name="calibration_name" value="$(arg calibration_name)"/>
-		<node name="asus_phase_space_calibrator" pkg="calibration" type="simple_calibrator" respawn="true" output="screen"/>
+		<node name="asus_phase_space_calibrator_average" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
 	</group>
 		
 	<node name="myCustomRviz" launch-prefix="" pkg="rviz" type="rviz" respawn="false" args="-d $(find calibration)/launch/asus_phasespace.rviz" output="screen"/>

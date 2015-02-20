@@ -2,10 +2,10 @@
 
   <arg name="calibration_name" default="tracker_object_calib"/>
 
-  <group ns="tracker_object">
+  <group ns="tracker_object_calib">
   	<rosparam command="load" file="$(find calibration)/config/$(arg calibration_name).yaml" />
   	<param name="calibration_name" value="$(arg calibration_name)"/>
-  	<node pkg="calibration" type="simple_calibrator" name="asus_head_vito_tf_broadcaster" respawn="true" output="screen" />
+  	<node pkg="calibration" type="simple_calibrator" name="tracker_object_calib_broadcaster" respawn="true" output="screen" />
   </group>
 
 </launch>
