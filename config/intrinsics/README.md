@@ -16,9 +16,9 @@ To use these instrinsics into your program you should create or modify a launch 
 
 `<include file="$(find openni2_launch)/launch/openni2_launch">`
 
-`<arg name="rgb_camera_info_url" value="file:///$(find calibration)/intrinsics/rgb_$(arg asus).yaml"/>`
+`<arg name="rgb_camera_info_url" value="file:///$(find calibration)/config/intrinsics/rgb_$(arg asus).yaml"/>`
 
-`<arg name="depth_camera_info_url" value="file:///$(find calibration)/intrinsics/depth_$(arg asus).yaml"/>`
+`<arg name="depth_camera_info_url" value="file:///$(find calibration)/config/intrinsics/depth_$(arg asus).yaml"/>`
 
 `</include>`
 
