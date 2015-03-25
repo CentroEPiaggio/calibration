@@ -29,7 +29,7 @@
 		    <arg name="left_arm_enabled" default="true"/>
    			<arg name="right_arm_enabled" default="false"/>
 		</include>
-			<param name="frame_id" value="camera_depth_optical_frame" />
+			<param name="frame_id" value="camera_rgb_optical_frame" />
 			<param name="ar_marker_frame" value="ar_marker_20" />
 			<param name="child_frame_id" value="world" />
 			<param name="calibrator_frame" value="calibrator_20"/>
@@ -42,7 +42,7 @@
 		    <arg name="left_arm_enabled" default="false"/>
    			<arg name="right_arm_enabled" default="true"/>
 		</include>
-			<param name="frame_id" value="camera_depth_optical_frame" />
+			<param name="frame_id" value="camera_rgb_optical_frame" />
 			<param name="ar_marker_frame" value="ar_marker_10" />
 			<param name="child_frame_id" value="world" />
 			<param name="calibrator_frame" value="calibrator_10"/>
