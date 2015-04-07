@@ -11,7 +11,7 @@
 
 	<arg name="cam_image_topic" default="/camera/depth_registered/points" />
 	<arg name="cam_info_topic" default="/camera/depth_registered/camera_info" />
-	<arg name="output_frame" default="/camera_depth_optical_frame" />
+	<arg name="output_frame" default="/camera_rgb_optical_frame" />
 
 	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkers" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame)" />
 
@@ -33,7 +33,7 @@
 
 	<!-- CALIBRATION SETUP -->
   	<group ns="asus_phase_space_calib">
-		<param name="frame_id" value="camera_depth_optical_frame" /> <!-- respect the ar marker is obtained with -->
+		<param name="frame_id" value="camera_rgb_optical_frame" /> <!-- respect the ar marker is obtained with -->
 		<param name="ar_marker_frame" value="ar_marker_60" /> <!-- 60 is the id of the ar marker used -->
 		<param name="child_frame_id" value="phase_space_world" />
 		<param name="calibrator_frame" value="calibrator"/>

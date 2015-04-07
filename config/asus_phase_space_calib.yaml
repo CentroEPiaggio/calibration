@@ -1,7 +1,7 @@
 # This file contains the values obtained by the calibration package
 # Results are written in the form that they can be directly sent to a static_transform_publisher node
 # Recall its usage use static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period(milliseconds)
-translation: [-0.318866, 0.79359, 2.14408]
-rotation: [-0.697551, -0.0977624, 0.701559, 0.108071]
-frame_id: camera_depth_optical_frame
+translation: [-0.192685, 0.917429, 1.95055]
+rotation: [-0.6388, -0.103384, 0.758342, 0.0785054]
+frame_id: camera_rgb_optical_frame
 child_frame_id: phase_space_world

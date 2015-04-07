@@ -53,7 +53,7 @@ class SimpleCalibrator
             // load the parameters
             nh_.param<std::vector<double> >("translation", translation_, {0, 0, 0});
             nh_.param<std::vector<double> >("rotation", rotation_, {0, 0, 0, 1});
-            nh_.param<std::string>("frame_id", frame_id_, "/camera_depth_optical_frame");
+            nh_.param<std::string>("frame_id", frame_id_, "/camera_rgb_optical_frame");
             nh_.param<std::string>("ar_marker_frame", ar_marker_frame_, "/ar_marker_60");
             nh_.param<std::string>("child_frame_id", child_frame_id_, "/phase_space_world");
             nh_.param<std::string>("calibrator_frame", calibrator_frame_, "/calibrator");
