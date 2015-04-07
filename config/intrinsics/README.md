@@ -6,8 +6,6 @@ and each one should have separate intrinsic parameters.
 - asus1 identifies Centro Piaggio sensor, the one used by Poses Scanner and Kuka head.
 - asus2 identifies Phase Space lab sensor.
 
-(Note that asus2 intrinsic are not available yet...)
-
 ### Usage
 To use these instrinsics into your program you should create or modify a launch file that calls `openni2_launch` this way:
 
