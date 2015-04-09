@@ -7,13 +7,17 @@
 	
 	<arg name="cam_image_topic" default="/camera/depth_registered/points" />
 	<arg name="cam_info_topic" default="/camera/depth_registered/camera_info" />
-	<arg name="output_frame" default="/camera_depth_optical_frame" />
+	<arg name="output_frame" default="/camera_rgb_optical_frame" />
 
 	<!-- Launch scene filter wich calls openni2 -->
 	<include file="$(find scene_filter_node)/launch/scene_filter_phase_space.launch"/>
 
 	<!-- OBJECT POSE ESTIMATION -->
-	<include file="$(find pose_estimation_online)/launch/object_calibration.launch"/>
+	<include file="$(find pose_estimation_online)/launch/pose_estimation_online.launch">
+    <arg name="object_calibration" value="true"/>
+    <arg name="iterations_in_prog_bisection" value="20"/>
+    <arg name="neighbors" value="30"/>
+  </include>
 
 	<!-- PHASE SPACE TOPICS -->
 	<!-- track the star with the phase space -->
