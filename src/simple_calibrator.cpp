@@ -7,6 +7,7 @@
 #include <tf/transform_datatypes.h>
 #include <std_msgs/String.h>
 #include <geometry_msgs/TransformStamped.h>
+#include <visualization_msgs/Marker.h>
 
 #include <fstream>
 #include <string>
