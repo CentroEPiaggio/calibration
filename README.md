@@ -47,7 +47,13 @@ The transformation between the two systems is saved inot a yaml file inside 'con
 
 ## PS-Tracker/Object calibration
 
-### TODO add software to download and software setup, divide everything in initial setup and actual procedure
+### Addictional dependencies and setup
+  - [pose_estimation_online](https://github.com/CentroEPiaggio/pose_estimation_online), follow setup procedure for this node.
+  - [dual_manipulation_shared](https://bitbucket.org/dualmanipulation/shared/overview), just clone it into catkin workspace, no further setup are needed.
+  - [asus_scanner_models](https://github.com/pacman-project/pacman-object-database), for object meshes and models.
+  - Make sure you also fullfil normal setup and dependencies from calibration package itself.
+
+### Procedure
 
 1. 3D print [this calibratior]() NOTE: find the star stl for printing to update the link
 
@@ -58,9 +64,9 @@ The transformation between the two systems is saved inot a yaml file inside 'con
 4. Put a table in the room centre and the object with the star attached to it on top of the table. Make sure the only thing on the table
 is the object you want to track, if needed hide the phase space equipments (cables, batteries, etc...) from the Asus rgb-d view. when you are satisfied with the layout don't move the table and the object anymore.
 
-5. Open a terminal and type `roslaunch calibration tracker_object_calibration.launch`, an rviz window will open.
+5. Open a terminal and type `roslaunch calibration tracker_object_calibration.launch tracked_object:=<name>`, where `<name>` is the object name you want to track, according to the ones available from `asus_scanner_models`. An rviz window will open to help you visualize the procedure.
 
-6. TODO view scene_filter parameters and adjust them to fit the table, so only the table and the object are visible by the Asus rgb-d.
+6. If needed view `scene_filter` parameters and adjust them to fit the table, so only the table and the object are visible by the Asus rgb-d. Usage and addictional informations on `scene_filter` package are visible [here](https://bitbucket.org/Tabjones/scene_filter).
 
 7. Open another terminal and type `rosservice call /pose_estimation_online estimate` a procedure for the object pose estimation will start. At the end the procedure (it will take a few seconds) a viewer will open picturing the estimation. Make sure the green pointcloud and the red one are visually aligned over each other as best as possible. If unsatisfied repeat this step until you see correct alignement. To help the process it could be useful to change the object position on the table a little bit.
 
