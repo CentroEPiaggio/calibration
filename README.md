@@ -68,7 +68,7 @@ is the object you want to track, if needed hide the phase space equipments (cabl
 
 6. If needed view `scene_filter` parameters and adjust them to fit the table, so only the table and the object are visible by the Asus rgb-d. Usage and addictional informations on `scene_filter` package are visible [here](https://bitbucket.org/Tabjones/scene_filter).
 
-7. Open another terminal and type `rosservice call /pose_estimation_online estimate` a procedure for the object pose estimation will start. At the end the procedure (it will take a few seconds) a viewer will open picturing the estimation. Make sure the green pointcloud and the red one are visually aligned over each other as best as possible. If unsatisfied repeat this step until you see correct alignement. To help the process it could be useful to change the object position on the table a little bit.
+7. Open another terminal and type `rosservice call /pose_estimation_online estimate visualize=true` a procedure for the object pose estimation will start. At the end the procedure (it will take a few seconds) a viewer will open (unless you put visualize=false during service call) picturing the estimation. Make sure the green pointcloud and the red one are visually aligned over each other as best as possible. If unsatisfied repeat this step until you see correct alignement. To help the process it could be useful to change the object position on the table a little bit.
 
 8. Finally to perform the calibration type `rosservice call /calibrate`, calibration correctness can be viewed directly on rviz or by killing the calibration node and by launching `roslaunch calibration tracker_object_broadcaster.launch`
 
