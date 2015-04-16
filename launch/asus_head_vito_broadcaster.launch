@@ -5,6 +5,7 @@
 
   <rosparam command="load" file="$(find calibration)/config/$(arg calibration_name).yaml" />
   <param name="calibration_name" value="$(arg calibration_name)"/>
+  <param name="start_broadcast" value="true"/>
   <node pkg="calibration" type="simple_calibrator" name="asus_head_vito_tf_broadcaster" respawn="true" output="screen" />
 
 	<!-- launch the rgbd sensor, in this case using openni2 for the asus -->

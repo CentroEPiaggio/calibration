@@ -39,9 +39,14 @@ class SimpleCalibrator
         std::string child_frame_id_;
         std::string calibrator_frame_;
         std::string calibration_name_;
+        std::string obj_name;
 
         std::vector<double> translation_;
         std::vector<double> rotation_;
+        bool pub_markers;
+        //publisher to broadcast obj mesh during obj/tracker calib
+        ros::Publisher rviz_marker_pub;
+        bool start_broadcast;
 
     public:
         bool calibrate(std_srvs::Empty::Request &request, std_srvs::Empty::Response &response);
@@ -50,7 +55,6 @@ class SimpleCalibrator
         // constructor
         SimpleCalibrator(ros::NodeHandle nh) : nh_(nh), priv_nh_("~")
         {
-
             // load the parameters
             nh_.param<std::vector<double> >("translation", translation_, {0, 0, 0});
             nh_.param<std::vector<double> >("rotation", rotation_, {0, 0, 0, 1});
@@ -59,6 +63,15 @@ class SimpleCalibrator
             nh_.param<std::string>("child_frame_id", child_frame_id_, "/phase_space_world");
             nh_.param<std::string>("calibrator_frame", calibrator_frame_, "/calibrator");
             nh_.param<std::string>("calibration_name", calibration_name_, "asus_phase_space");
+            nh_.param<std::string>("tracked_object", obj_name, "object");
+            nh_.param<bool>("start_broadcast", start_broadcast, false);
+            if (obj_name.compare("object") != 0)
+            {
+              pub_markers=true;
+              rviz_marker_pub = nh_.advertise<visualization_msgs::Marker>("object", 1);
+            }
+            else 
+              pub_markers=false;
             
             // init the calibration to the identity to publish something
             transform_.setOrigin( tf::Vector3( translation_.at(0), translation_.at(1), translation_.at(2) ) );
@@ -75,6 +88,7 @@ class SimpleCalibrator
 
 bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::Empty::Response &response )
 {
+    nh_.setParam("start_broadcast", false);
 
     // 1. get the ar marker frame in the asus frame
     tf::StampedTransform ar_marker_frame;
@@ -121,15 +135,52 @@ bool SimpleCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::E
                             transform_.getRotation().getW() << "]" << std::endl;
       f << "frame_id: " << frame_id_.c_str() << std::endl;
       f << "child_frame_id: " << child_frame_id_.c_str() << std::endl;
+      if (pub_markers)
+        f << "tracked_object: " << obj_name.c_str() << std::endl;
       f.close();
     }
+    nh_.setParam("start_broadcast", true);
     return true;
 }
 
 // this function is called as fast as ROS can from the main loop directly
 void SimpleCalibrator::publishTf()
 {
+  nh_.getParam("start_broadcast", start_broadcast);
+  if (start_broadcast)
+  {
     tf_broadcaster_.sendTransform(tf::StampedTransform(transform_, ros::Time::now(), frame_id_, child_frame_id_)); //from asus to phase space
+    if (pub_markers)
+    {
+      visualization_msgs::Marker marker;
+      marker.header.frame_id = "/star";
+      marker.header.stamp = ros::Time();
+      marker.ns=obj_name.c_str();
+      marker.id=0;
+      marker.scale.x=1;
+      marker.scale.y=1;
+      marker.scale.z=1;
+      marker.type = visualization_msgs::Marker::MESH_RESOURCE;
+      std::string mesh_path ("package://asus_scanner_models/" + obj_name + "/" + obj_name + ".stl");
+      marker.mesh_resource = mesh_path.c_str();
+      marker.action = visualization_msgs::Marker::ADD;
+      geometry_msgs::Pose pose;
+      pose.position.x = transform_.getOrigin()[0];
+      pose.position.y = transform_.getOrigin()[1];
+      pose.position.z = transform_.getOrigin()[2];
+      pose.orientation.x = transform_.getRotation().getX();
+      pose.orientation.y = transform_.getRotation().getY();
+      pose.orientation.z = transform_.getRotation().getZ();
+      pose.orientation.w = transform_.getRotation().getW();
+      marker.pose = pose;
+      marker.color.r = 1.0f;
+      marker.color.g = 0.0f;
+      marker.color.b = 0.0f;
+      marker.color.a = 1.0f;
+      marker.lifetime = ros::Duration(1);
+      rviz_marker_pub.publish(marker);
+    }
+  }
 }
 
 } // namespace calibration

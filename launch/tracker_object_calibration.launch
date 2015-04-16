@@ -1,7 +1,8 @@
 <launch>
 
-	<arg name="calibration_name" default="tracker_object_calib"/>
-
+  <arg name="calibration_name" default="tracker_object_calib"/>
+  <arg name="tracked_object" default="object"/>
+  
 	<!-- ASUS TOPICS -->
 	<!-- launch the ar tracker, units in cm, adjust at will -->
 	
@@ -36,7 +37,9 @@
 		<param name="ar_marker_frame" value="star" /> <!-- use the transform output by pose estimation online-->
 		<param name="child_frame_id" value="object" />
 		<param name="calibrator_frame" value="star"/>
-		<param name="calibration_name" value="$(arg calibration_name)"/>
+    <param name="calibration_name" value="$(arg calibration_name)"/>
+    <param name="tracked_object" value="$(arg tracked_object)"/>
+
 		<node name="tracker_object_calib" pkg="calibration" type="simple_calibrator" respawn="true" output="screen" />
 	</group>
 

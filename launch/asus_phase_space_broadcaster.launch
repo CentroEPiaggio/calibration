@@ -5,6 +5,7 @@
   <group ns="asus_phase_space_calib">
   	<rosparam command="load" file="$(find calibration)/config/$(arg calibration_name).yaml" />
   	<param name="calibration_name" value="$(arg calibration_name)"/>
+  	<param name="start_broadcast" value="true"/>
   	<node pkg="calibration" type="simple_calibrator" name="asus_phase_space_calib_broadcaster" respawn="true" output="screen" />
   </group>
 

@@ -11,6 +11,7 @@ Panels:
         - /PointCloud22
         - /TF1
         - /TF1/Frames1
+        - /Marker1
       Splitter Ratio: 0.656827
     Tree Height: 689
   - Class: rviz/Selection
@@ -75,7 +76,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
-      Size (Pixels): 5
+      Size (Pixels): 1
       Size (m): 0.01
       Style: Points
       Topic: /camera/depth_registered/points
@@ -85,8 +86,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.0114563
-        Min Value: -0.209316
+        Max Value: 1.601
+        Min Value: 1.236
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -104,9 +105,9 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
-      Size (Pixels): 3
+      Size (Pixels): 2
       Size (m): 0.01
-      Style: Flat Squares
+      Style: Points
       Topic: /scene_filter/scene
       Use Fixed Frame: true
       Use rainbow: true
@@ -134,7 +135,7 @@ Visualization Manager:
           Value: true
       Marker Scale: 1
       Name: TF
-      Show Arrows: true
+      Show Arrows: false
       Show Axes: true
       Show Names: true
       Tree:
@@ -144,17 +145,24 @@ Visualization Manager:
               {}
           camera_rgb_frame:
             camera_rgb_optical_frame:
-              object:
-                {}
               phase_space_world:
                 star:
-                  {}
+                  object:
+                    {}
       Update Interval: 0
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /tracker_object_calib/object
+      Name: Marker
+      Namespaces:
+        bowlB: true
+      Queue Size: 100
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: camera_link
+    Fixed Frame: camera_rgb_optical_frame
     Frame Rate: 30
   Name: root
   Tools:
@@ -175,22 +183,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.32829
+      Distance: 0.51856
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.45253
-        Y: 0.313044
-        Z: -0.244859
+        X: 0.122027
+        Y: 0.251573
+        Z: 1.29453
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.458568
+      Pitch: -0.934796
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.98466
+      Yaw: 4.76595
     Saved: ~
 Window Geometry:
   Displays:
@@ -208,5 +216,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1680
-  X: -10
-  Y: 19
+  X: 0
+  Y: 27
