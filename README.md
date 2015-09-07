@@ -21,7 +21,7 @@ A general calibration tool for the equipments in Centro Piaggio. For now, only a
 
 7. Place the calibrator where you consider the two systems fully track it succesfully, e.g. the marker plane is parallel to the lens. Now type `rosservice call /calibrate` and you should see how both marker and tracker align
 
-The transformation between the two systems is saved inot a yaml file inside 'config' with a given name and broadcasted. However, after calibration, you might kill the process, and type `roslaunch calibration asus_head_vito_broadcaster.launch` to add the name space to the calibration parameters.
+8. The transformation between the two systems is saved into a yaml file inside 'config' with a given name and broadcasted. After calibration, you might kill the process, and type `roslaunch calibration asus_head_vito_broadcaster.launch` to add the name space to the calibration parameters.
 
 
 
@@ -39,9 +39,9 @@ The transformation between the two systems is saved inot a yaml file inside 'con
 
 6. You should see that the calibrator object is detected and being tracked by the phase space, and that the ar marker is being detected and tracked by the asus. Check that the axes correspond to those of the pattern. At this point, both tracker and marker do not necessarily coincide, however, both should move identically.
 
-7. Place the calibrator where you consider the two systems fully track it succesfully, e.g. the marker plane is parallel to the lens and you should see how both marker and tracker align
+7. Place the calibrator where you consider the two systems fully track it succesfully, e.g. the marker plane is parallel to the lens. Now type `rosservice call /calibrate` and you should see how both marker and tracker align.
 
-The transformation between the two systems is saved inot a yaml file inside 'config' with a given name and broadcasted. However, after calibration, you might kill the process, and type `roslaunch calibration asus_phase_space_broadcaster.launch` to add the namespace to the calibration parameters.
+8. The transformation between the two systems is saved into a yaml file inside 'config' with a given name and broadcasted. However, after calibration, you might kill the process, and type `roslaunch calibration asus_phase_space_broadcaster.launch` to add the namespace to the calibration parameters.
 
 
 
