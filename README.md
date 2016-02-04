@@ -9,7 +9,7 @@ A general calibration tool for the equipments in Centro Piaggio. For now, only a
 
 1. Check whether [this calibrator](resources/3DPrints/asus_kuka_calibrator.stl) is already available, otherwise 3D print it (only one arm is required, so print it once)
 
-2. Print any of the two markers depending you use the [Right](resources/MarkerPrints/KukaLeft_ID20.png) or the [Left](resources/MarkerPrints/KukaLeft_ID20.png) arm you use for calibration. NOTE: you must scale the print until the image is 10x10cm, but you need to cut the paper as a 15x15cm square with the image centered.
+2. Print any of the two markers depending you use the [Right](resources/MarkerPrints/KukaRight_ID10.png) or the [Left](resources/MarkerPrints/KukaLeft_ID20.png) arm you use for calibration. NOTE: you must scale the print until the image is 10x10cm, but you need to cut the paper as a 15x15cm square with the image centered.
 
 3. Mount the 3D print on the robot such as the hole for the cables coincide with the cables of the KUKA when it is fully extend at home position. (ToDo: take picture)
 
