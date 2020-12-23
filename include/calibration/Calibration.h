@@ -8,7 +8,7 @@
 //unsupported
 #include <unsupported/Eigen/NonLinearOptimization>
 #include <unsupported/Eigen/NumericalDiff>
-#include <unsupported/Eigen/KroneckerProduct>
+//#include <unsupported/Eigen/KroneckerProduct>
 #include <Eigen/LU>
 
 // this is to avoid writing Eigen::Matrix3f, Eigen::Vector3f

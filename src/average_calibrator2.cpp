@@ -67,7 +67,7 @@ class AverageCalibrator
         bool removePose(std_srvs::Empty::Request &request, std_srvs::Empty::Response &response);
 
         void publishTf();
-        bool recordTf(int i);
+        void recordTf();
 
         // constructor
         AverageCalibrator(ros::NodeHandle nh) : nh_(nh), priv_nh_("~")
@@ -108,7 +108,7 @@ class AverageCalibrator
         ~AverageCalibrator() {}
 
 };
-bool AverageCalibrator::recordTf(int i)
+void AverageCalibrator::recordTf(int index)
 {
     // 1. get the first transformation
     tf::StampedTransform first_transformation;
@@ -120,7 +120,6 @@ bool AverageCalibrator::recordTf(int i)
     {
       ROS_ERROR("%s",ex.what());
       ros::Duration(1.0).sleep();
-      return false;
     }
 
     // 2. get the second transformation
@@ -161,7 +160,7 @@ bool AverageCalibrator::recordTf(int i)
 
     kept_quaternion_second_.at(i)=(Eigen::Quaterniond(second_transformation.getRotation().getW(), second_transformation.getRotation().getX(), 
           second_transformation.getRotation().getY(), second_transformation.getRotation().getZ()));
-    return true;
+
     
 }
 
@@ -193,6 +192,7 @@ bool AverageCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::
        	   		q.w()*q.x(), 	q.x()*q.x(), 		q.x()*q.y(), 	q.x()*q.z(),
                	q.w()*q.y(), 	q.x()*q.y(),  	q.y()*q.y(), 		q.y()*q.z(),
            		q.w()*q.z(), 	q.x()*q.z(), 	q.y()*q.z(),  	q.z()*q.z();
+
 	  A = A+  A_tmp;
     }
     tx /= n;
@@ -201,8 +201,11 @@ bool AverageCalibrator::calibrate( std_srvs::Empty::Request &request, std_srvs::
 
     A = 1/n*A;
     Eigen::SelfAdjointEigenSolver<Eigen::Matrix4d> es(A);
+    int maxElementIndex;
+    int maxRow;
+    es.eigenvalues().maxCoeff(&maxRow,&maxElementIndex);
 
-    Eigen::VectorXcd v=es.eigenvectors().col(es.eigenvectors().cols()-1);
+    Eigen::VectorXcd v = es.eigenvectors().col(maxElementIndex);
     Eigen::Quaterniond q_avg(v[0].real(),v[1].real(),v[2].real(),v[3].real());
 	
 
@@ -238,9 +241,9 @@ bool AverageCalibrator::addPose( std_srvs::Empty::Request &request, std_srvs::Em
 {
 	ros::Rate rate(10.0); //go at 100Hz
     int num_t = 0;
-    while(ros::ok() && num_t<samples_){	
-    	if(recordTf(num_t)) num_t++;
-		
+    while(ros::ok() && num_t<=samples_){	
+    	recordTf();
+		num_t++;
 		rate.sleep();
 		ros::spinOnce();
     }
@@ -258,6 +261,7 @@ bool AverageCalibrator::addPose( std_srvs::Empty::Request &request, std_srvs::Em
       ty += kept_translation_y_first_[i];
       tz += kept_translation_z_first_[i];
       q = kept_quaternion_first_.at(i);
+
       A_tmp <<  q.w()*q.w(), 		q.w()*q.x(), 	q.w()*q.y(), 	q.w()*q.z(),
        	   		q.w()*q.x(), 	q.x()*q.x(), 		q.x()*q.y(), 	q.x()*q.z(),
                	q.w()*q.y(), 	q.x()*q.y(),  	q.y()*q.y(), 		q.y()*q.z(),
@@ -274,7 +278,9 @@ bool AverageCalibrator::addPose( std_srvs::Empty::Request &request, std_srvs::Em
     int maxElementIndex;
     int maxRow;
     ///Check if correct!!! I have to select the eigenvector for the maximum eigenvalue
-    Eigen::VectorXcd v = es.eigenvectors().col(es.eigenvectors().cols()-1);
+    es.eigenvalues().maxCoeff(&maxRow,&maxElementIndex);
+
+    Eigen::VectorXcd v = es.eigenvectors().col(maxElementIndex);
     Eigen::Quaterniond q_first(v[0].real(),v[1].real(),v[2].real(),v[3].real());
 
     first_tran.setOrigin( tf::Vector3( tx,ty,tz) );
@@ -288,9 +294,9 @@ bool AverageCalibrator::addPose( std_srvs::Empty::Request &request, std_srvs::Em
 
     for (int i =0; i<samples_; ++i)
     {
-      tx += kept_translation_x_second_[i];
-      ty += kept_translation_y_second_[i];
-      tz += kept_translation_z_second_[i];
+      tx += kept_translation_x_first_[i];
+      ty += kept_translation_y_first_[i];
+      tz += kept_translation_z_first_[i];
       q = kept_quaternion_second_.at(i);
 
       A_tmp <<  q.w()*q.w(), 		q.w()*q.x(), 	q.w()*q.y(), 	q.w()*q.z(),
@@ -308,7 +314,7 @@ bool AverageCalibrator::addPose( std_srvs::Empty::Request &request, std_srvs::Em
     A = 1/samples_*A;
     Eigen::SelfAdjointEigenSolver<Eigen::Matrix4d> es1(A);
     es1.eigenvalues().maxCoeff(&maxRow,&maxElementIndex);
-    v = es1.eigenvectors().col(es1.eigenvectors().cols()-1);;
+    v = es1.eigenvectors().col(maxElementIndex);
 
     Eigen::Quaterniond q_second(v[0].real(),v[1].real(),v[2].real(),v[3].real());
             
@@ -320,7 +326,7 @@ bool AverageCalibrator::addPose( std_srvs::Empty::Request &request, std_srvs::Em
     // 3. since the reference frame is the same, we just need to inverse and multiply
     
     calib_tran = first_tran*second_tran.inverse();
-    transform_vector_.push_back(calib_tran);
+    transform_vector_.push_back(transform_);
     // // 4. write the transform on a yaml file
     // std::string path = ros::package::getPath("calibration");
     // std::string file = path + "/config/" + calibration_name_ + ".yaml";

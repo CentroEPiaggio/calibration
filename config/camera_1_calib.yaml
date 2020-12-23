@@ -1,8 +1,7 @@
 # This file contains the values obtained by the calibration package
 # Results are written in the form that they can be directly sent to a static_transform_publisher node
 # Recall its usage use static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period(milliseconds)
-translation: [0.0217751, 0.0808143, 0.108372]
-rotation: [0.602128, -0.040872, 0.133359, 0.786121]
-frame_id: star
-child_frame_id: object
-tracked_object: bowlB
+translation: [0.136817, 0.19418, 1.18244]
+rotation: [-0.34813, -0.6085, 0.622326, -0.348201]
+frame_id: camera1_color_optical_frame
+child_frame_id: panda_link0
