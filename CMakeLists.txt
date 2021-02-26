@@ -18,6 +18,8 @@ find_package(catkin REQUIRED
 ## System dependencies are found with CMake's conventions
 #find_package(Boost REQUIRED COMPONENTS system)
 find_package(Eigen REQUIRED)
+#fix path for eigen
+set(EIGEN_DIR "/home/alessandro/eigen-3.3.7")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
