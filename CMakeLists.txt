@@ -100,7 +100,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(include
-  ${Eigen_INCLUDE_DIRS}
+  ${EIGEN_DIR}
   ${catkin_INCLUDE_DIRS}
 )
 
