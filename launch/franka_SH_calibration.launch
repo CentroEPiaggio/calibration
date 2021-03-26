@@ -6,7 +6,7 @@
   <arg name="robot_ip" />
   <arg name="publish_rate" default="30" />
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find calibration)/robots/panda_arm_calibration.urdf.xacro" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find calibration)/robots/panda_arm_SH_calibration.urdf.xacro" />
 
 
   <node name="robot_joint_state_publisher" pkg="franka_visualization" type="robot_joint_state_publisher" output="screen">

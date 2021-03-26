@@ -46,7 +46,7 @@
 		<param name="frame_id" value="$(arg camera_name)_color_optical_frame" />
 		<param name="ar_marker_frame" value="aruco_CT/aruco_marker_frame" />
 		<param name="child_frame_id" value="setup1/panda_link0" />
-		<param name="calibrator_frame" value="setup1/calibrator_pandagripper"/>
+		<param name="calibrator_frame" value="setup1/calibrator_softhand"/>
 		<param name="calibration_name" value="$(arg calibration_name)"/>
     	<node name="franka_arm_d415_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
     </group>
