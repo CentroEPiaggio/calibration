@@ -4,7 +4,7 @@
   	<!-- <arg name="serial_no_camera_name"    		default="f0233232"/> 		 -->
   
 
-    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+    <include file="$(find realsense2_camera)/launch/rs_rgbd_calib.launch">
   	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
 		<arg name="camera" 	value="$(arg camera_name)" />
 		<!-- <arg name="serial_no_camera" 	value="$(arg serial_no_camera_name)" /> -->
@@ -12,12 +12,12 @@
 
 
 <!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
-<!--   	<group ns="setup1">
+  	<group ns="setup1">
 		<param name="tf_prefix" value="setup1"></param>
-    	<include file="$(find calibration)/launch/franka_SH_calibration.launch">
+    	<include file="$(find calibration)/launch/franka_SH_industry_calibration.launch">
     		<arg name="robot_ip"         value="172.16.0.102"/>
    		</include>
-  	</group> -->
+  	</group>
 
 
 <!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
@@ -46,7 +46,7 @@
 		<param name="frame_id" value="$(arg camera_name)_color_optical_frame" />
 		<param name="ar_marker_frame" value="aruco_CT/aruco_marker_frame" />
 		<param name="child_frame_id" value="setup1/panda_link0" />
-		<param name="calibrator_frame" value="setup1/calibrator_softhand"/>
+		<param name="calibrator_frame" value="setup1/calibrator_softhand_industry"/>
 		<param name="calibration_name" value="$(arg calibration_name)"/>
     	<node name="franka_arm_d415_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
     </group>
