@@ -4,7 +4,7 @@
   	<!-- <arg name="serial_no_camera_name"    		default="f0233232"/> 		 -->
   
 
-    <include file="$(find realsense2_camera)/launch/rs_rgbd_calib.launch">
+    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
   	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
 		<arg name="camera" 	value="$(arg camera_name)" />
 		<!-- <arg name="serial_no_camera" 	value="$(arg serial_no_camera_name)" /> -->
