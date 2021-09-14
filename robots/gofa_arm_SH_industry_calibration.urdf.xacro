@@ -5,7 +5,7 @@
   <xacro:gofa />
 
   <!-- from the CAD model, the frame coincides with the 7-th link -->
-  <xacro:calibrator_softhand_industry name="calibrator_softhand_industry" parent="L6">
+  <xacro:calibrator_softhand_industry name="calibrator_softhand_industry" parent="tool0">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:calibrator_softhand_industry>
 
