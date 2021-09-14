@@ -23,9 +23,9 @@
 
   <!-- this is where the ar marker is w.r.t. the mesh, known from CAD model -->
   <joint name="${name}_joint" type="fixed">
-<!--     <origin xyz="-0.04 0 0" rpy="0 0 1.57079633"/>-->    
-    <!-- <origin xyz="-0.019884 0 0.02868" rpy="0.5235989 0 1.5707963"/> -->
-    <origin xyz="0.0 -0.044 0.022" rpy="1.5707963 0.0 0.0"/>
+
+    <!-- <origin xyz="0.0 -0.044 0.022" rpy="1.5707963 0.0 0.0"/> Franka -->
+    <origin xyz="0.0546 0.044 0.0" rpy="-1.5707963 0.0 0.0"/> <!--GOFA -->
     <parent link="${name}_mesh"/>
     <child link="${name}"/>
   </joint>
