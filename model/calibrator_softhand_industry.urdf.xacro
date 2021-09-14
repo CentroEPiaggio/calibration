@@ -7,25 +7,21 @@
     <parent link="${parent}"/>
     <child link="${name}_mesh"/>
   </joint>
+  
   <link name="${name}_mesh">
-<!--     <visual>
+    <visual>
       <geometry>
-        <mesh filename="package://franka_description/meshes/camera_robot_calibrator.stl"/>
+        <mesh filename="package://calibration/resources/3DPrints/qb_industry_target_v01.dae" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="Vito/Silver"/>
     </visual>
-    <collision>
-      <geometry>
-        <mesh filename="package://franka_description/meshes/camera_robot_calibrator.stl"/>
-      </geometry>
-    </collision> -->
   </link>
 
   <!-- this is where the ar marker is w.r.t. the mesh, known from CAD model -->
   <joint name="${name}_joint" type="fixed">
 
     <!-- <origin xyz="0.0 -0.044 0.022" rpy="1.5707963 0.0 0.0"/> Franka -->
-    <origin xyz="0.0546 0.044 0.0" rpy="0.0 -1.5707963 -1.5707963"/> <!--GOFA -->
+    <origin xyz="0 0.0285 -0.044" rpy="0 3.141592 0"/><!--GOFA-->
     <parent link="${name}_mesh"/>
     <child link="${name}"/>
   </joint>
