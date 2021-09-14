@@ -39,15 +39,15 @@
 
 
   	<group ns="calib_CT">
-		<arg name="calibration_name" default="d415_R_franka_calib1"/>
+		<arg name="calibration_name" default="d415_R_gofa_calib1"/>
 
 		<param name="tf_prefix" value="calib_CT"></param>
 		<param name="frame_id" value="$(arg camera_name)_color_optical_frame" />
 		<param name="ar_marker_frame" value="aruco_CT/aruco_marker_frame" />
-		<param name="child_frame_id" value="tool0" />
+		<param name="child_frame_id" value="base" />
 		<param name="calibrator_frame" value="calibrator_softhand_industry"/>
 		<param name="calibration_name" value="$(arg calibration_name)"/>
-    	<node name="franka_arm_d415_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
+    <node name="gofa_arm_d415_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
     </group>
 
 
