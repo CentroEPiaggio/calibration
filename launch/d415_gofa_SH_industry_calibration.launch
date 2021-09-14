@@ -12,13 +12,12 @@
 
 
 <!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
-  	<group ns="setup1">
-		<!-- <param name="tf_prefix" value="setup1"></param> -->
+<!--   	<group ns="setup1">
     	<include file="$(find calibration)/launch/gofa_SH_industry_calibration.launch">
     		<arg name="robot_ip"         value="192.168.131.200"/>
    		</include>
   	</group>
-
+ -->
 
 <!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
 
