@@ -11,13 +11,14 @@
 	</include>
 
 
-<!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
-<!--   	<group ns="setup1">
+<!-- //////////////////////////////////////////////////// GOFA //////////////////////////////////////////////////// -->
+  	<group ns="setup1">
+      <param name="tf_prefix" value="setup1"></param>
     	<include file="$(find calibration)/launch/gofa_SH_industry_calibration.launch">
     		<arg name="robot_ip"         value="192.168.131.200"/>
    		</include>
   	</group>
- -->
+
 
 <!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
 
@@ -44,8 +45,8 @@
 		<param name="tf_prefix" value="calib_CT"></param>
 		<param name="frame_id" value="$(arg camera_name)_color_optical_frame" />
 		<param name="ar_marker_frame" value="aruco_CT/aruco_marker_frame" />
-		<param name="child_frame_id" value="base" />
-		<param name="calibrator_frame" value="calibrator_softhand_industry"/>
+		<param name="child_frame_id" value="setup1/base" />
+		<param name="calibrator_frame" value="setup1/calibrator_softhand_industry"/>
 		<param name="calibration_name" value="$(arg calibration_name)"/>
     <node name="gofa_arm_d415_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
     </group>
