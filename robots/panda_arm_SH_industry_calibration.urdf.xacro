@@ -6,7 +6,7 @@
 
   <!-- from the CAD model, the frame coincides with the 7-th link -->
   <xacro:calibrator_softhand_industry name="calibrator_softhand_industry" parent="panda_link8">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 -0.0065" rpy="1.5707963 0.0 3.141592"/>
   </xacro:calibrator_softhand_industry>
 
 
