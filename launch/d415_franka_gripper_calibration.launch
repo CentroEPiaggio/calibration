@@ -1,14 +1,15 @@
 <launch>
 
   	<arg name="camera_name"              		default="camera"/>		<!-- Note: Replace with camera name -->
-  	<!-- <arg name="serial_no_camera_name"    		default="f0233232"/> 		 -->
+    <arg name="serial_no_camera_name"       default="108222250674"/>
+  	<!-- <arg name="serial_no_camera_name"    		default="839212060194"/> -->
   
 
     <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
   	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
 		<arg name="camera" 	value="$(arg camera_name)" />
-		<!-- <arg name="serial_no_camera" 	value="$(arg serial_no_camera_name)" /> -->
-	</include>
+		<arg name="serial_no" 	value="$(arg serial_no_camera_name)"/>
+	  </include>
 
 
 <!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
@@ -26,7 +27,7 @@
 		<param name="tf_prefix" value="aruco_CT"></param>
   		<include file="$(find calibration)/launch/single.launch">
     		<arg name="markerId"        	value="57"/>
-			<arg name="markerSize"      	value="0.049"/>    <!-- in m -->
+			<arg name="markerSize"      	value="0.05"/>    <!-- in m -->
     		<arg name="marker_frame"    	value="aruco_CT/aruco_marker_frame"/>
   			<arg name="camera_info_topic"	value="/$(arg camera_name)/color/camera_info"/>
   			<arg name="image_topic"			value="/$(arg camera_name)/color/image_rect_color"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <launch>
 
-    <arg name="markerId"        default="30"/>
-    <arg name="markerSize"      default="0.100"/>    <!-- in m -->
+    <arg name="markerId"        default="5"/>
+    <arg name="markerSize"      default="0.06"/>    <!-- in m -->
     <!-- <arg name="markerSize"      default="0.098"/>  -->   <!-- in m -->
     <arg name="eye"             default="left"/>
     <arg name="marker_frame"    default="aruco_marker_frame"/>
