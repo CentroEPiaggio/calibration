@@ -11,7 +11,7 @@
   <link name="${name}_mesh">
     <visual>
       <geometry>
-        <mesh filename="package://calibration/resources/3DPrints/qb_industry_target_v01.dae" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://calibration/resources/3DPrints/flange_target.dae" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="Vito/Silver"/>
     </visual>
@@ -19,7 +19,8 @@
 
   <!-- this is where the ar marker is w.r.t. the mesh, known from CAD model -->
   <joint name="${name}_joint" type="fixed">
-      <origin xyz="0 0.0285 -0.044" rpy="0 3.141592 0"/>
+      <!-- <origin xyz="0 0.0285 -0.044" rpy="0 3.141592 0"/> -->
+      <origin xyz="0.0445 0.031  0" rpy="0 1.5707963 0"/>
     <parent link="${name}_mesh"/>
     <child link="${name}"/>
   </joint>

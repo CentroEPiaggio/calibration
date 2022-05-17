@@ -12,6 +12,7 @@
   	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
 		<arg name="camera" 	value="$(arg camera_name)" />
 		<arg name="serial_no" 	value="$(arg serial_no_camera_name)" />
+    <arg name="json_file_path"     value="$(find realsense2_camera)/launch/json_config/H_acc.json"/>
 	</include>
 
 
@@ -19,7 +20,8 @@
   	<group ns="setup1">
       <param name="tf_prefix" value="setup1"></param>
     	<include file="$(find calibration)/launch/gofa_SH_industry_calibration.launch">
-    		<arg name="robot_ip"         value="192.168.131.200"/>
+        <!-- <arg name="robot_ip"         value="192.168.131.200"/> -->
+    		<arg name="robot_ip"         value="192.168.131.100"/>
    		</include>
   	</group>
 

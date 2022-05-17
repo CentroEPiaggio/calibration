@@ -15,7 +15,7 @@
   	<group ns="setup1">
 		<param name="tf_prefix" value="setup1"></param>
     	<include file="$(find calibration)/launch/franka_SH_industry_calibration.launch">
-    		<arg name="robot_ip"         value="172.16.0.101"/>
+    		<arg name="robot_ip"         value="172.16.0.102"/>
    		</include>
   	</group>
 

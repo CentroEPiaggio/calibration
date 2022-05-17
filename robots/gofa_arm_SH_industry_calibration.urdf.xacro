@@ -6,7 +6,8 @@
 
   <!-- from the CAD model, the frame coincides with the 7-th link -->
   <xacro:calibrator_softhand_industry name="calibrator_softhand_industry" parent="tool0">
-    <origin xyz="-0.0065 0 0" rpy="1.5707963 1.5707963 0"/> <!-- il frame della mesh del calibrator è sulla superfice esterna -->
+    <origin xyz="-0.006 0 0" rpy=" 0 3.1415927 -1.5707963"/> <!-- il frame della mesh del calibrator è sulla superfice esterna -->
+    <!-- <origin xyz="-0.0065 0 0" rpy="1.5707963 1.5707963 0"/> da cad è questo ma in realtà no -->
   </xacro:calibrator_softhand_industry>
 
 
