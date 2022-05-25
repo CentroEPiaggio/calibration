@@ -7,17 +7,18 @@
     <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
   	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
 		<arg name="camera" 	value="$(arg camera_name)" />
+    <arg name="json_file_path"     value="$(find realsense2_camera)/launch/json_config/H_acc.json"/>
 		<!-- <arg name="serial_no_camera" 	value="$(arg serial_no_camera_name)" /> -->
 	</include>
 
 
 <!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
-<!--   	<group ns="setup1">
+  	<group ns="setup1">
 		<param name="tf_prefix" value="setup1"></param>
     	<include file="$(find calibration)/launch/franka_SH_calibration.launch">
     		<arg name="robot_ip"         value="172.16.0.102"/>
    		</include>
-  	</group> -->
+  	</group>
 
 
 <!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
@@ -26,7 +27,7 @@
 		<param name="tf_prefix" value="aruco_CT"></param>
   		<include file="$(find calibration)/launch/single.launch">
     		<arg name="markerId"        	value="57"/>
-			<arg name="markerSize"      	value="0.05"/>    <!-- in m -->
+			<arg name="markerSize"      	value="0.049"/>    <!-- in m -->
     		<arg name="marker_frame"    	value="aruco_CT/aruco_marker_frame"/>
   			<arg name="camera_info_topic"	value="/$(arg camera_name)/color/camera_info"/>
   			<arg name="image_topic"			value="/$(arg camera_name)/color/image_rect_color"/>
