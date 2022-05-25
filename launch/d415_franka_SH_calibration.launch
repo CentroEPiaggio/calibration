@@ -27,7 +27,7 @@
 		<param name="tf_prefix" value="aruco_CT"></param>
   		<include file="$(find calibration)/launch/single.launch">
     		<arg name="markerId"        	value="57"/>
-			<arg name="markerSize"      	value="0.049"/>    <!-- in m -->
+			<arg name="markerSize"      	value="0.05"/>    <!-- in m -->
     		<arg name="marker_frame"    	value="aruco_CT/aruco_marker_frame"/>
   			<arg name="camera_info_topic"	value="/$(arg camera_name)/color/camera_info"/>
   			<arg name="image_topic"			value="/$(arg camera_name)/color/image_rect_color"/>
