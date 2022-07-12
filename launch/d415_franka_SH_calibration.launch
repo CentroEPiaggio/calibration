@@ -7,7 +7,7 @@
     <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
   	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
 		<arg name="camera" 	value="$(arg camera_name)" />
-    <arg name="json_file_path"     value="$(find realsense2_camera)/launch/json_config/H_acc.json"/>
+    <!-- <arg name="json_file_path"     value="$(find realsense2_camera)/launch/json_config/H_acc.json"/> -->
 		<!-- <arg name="serial_no_camera" 	value="$(arg serial_no_camera_name)" /> -->
 	</include>
 
@@ -16,7 +16,7 @@
   	<group ns="setup1">
 		<param name="tf_prefix" value="setup1"></param>
     	<include file="$(find calibration)/launch/franka_SH_calibration.launch">
-    		<arg name="robot_ip"         value="172.16.0.102"/>
+    		<arg name="robot_ip"         value="192.168.1.2"/>
    		</include>
   	</group>
 
