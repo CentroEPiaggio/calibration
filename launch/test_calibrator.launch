@@ -1,0 +1,71 @@
+<launch>
+
+  	<arg name="camera_1_name"              		default="camera_1"/>		<!-- Note: Replace with camera name -->
+    <arg name="serial_no_camera_1_name"       default="810512060052"/>
+    <!-- 920312070833 -->
+    <!-- 810512060052 -->
+  	<!-- <arg name="serial_no_camera_name"    		default="839212060194"/> -->
+  
+    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+  	<!-- <include file="$(find calibration_softbots)/launch/rs_rgbd_HD.launch"> -->
+		<arg name="camera" 	value="$(arg camera_1_name)" />
+		<arg name="serial_no" 	value="$(arg serial_no_camera_1_name)"/>
+	      <arg name="depth_width"       value="1280"/>
+      <arg name="depth_height"      value="720"/>
+      <arg name="color_width"       value="1280"/>
+      <arg name="color_height"      value="720"/>
+<arg name="filters" value="spatial, temporal" />
+      <arg name="color_fps"         value="6"/>
+      <arg name="depth_fps"         value="6"/>
+
+	  </include>
+
+
+
+<!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
+  	
+    <!-- <group ns="setup1">
+		<param name="tf_prefix" value="setup1"></param>
+    	<include file="$(find calibration)/launch/franka_gripper_calibration.launch">
+    		<arg name="robot_ip"         value="172.16.0.3"/>
+   		</include>
+  	</group> -->
+
+
+<!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
+
+  	<group ns="aruco_CT_1">
+		<param name="tf_prefix" value="aruco_CT_1"></param>
+  		<include file="$(find calibration)/launch/single.launch">
+    		<arg name="markerId"        	value="57"/>
+			<arg name="markerSize"      	value="0.122"/>   
+              <!-- 0.1225 is for camera serial  920312070833 -->
+            
+    		<arg name="marker_frame"    	value="aruco_CT_1/aruco_marker_frame"/>
+  			<arg name="camera_info_topic"	value="/$(arg camera_1_name)/color/camera_info"/>
+  			<arg name="image_topic"			value="/$(arg camera_1_name)/color/image_rect_color"/>
+  			<arg name="camera_frame"		value="$(arg camera_1_name)_color_optical_frame"/>
+  			<arg name="corner_refinement" 	value="LINES" />
+    	</include>
+  	</group>
+
+  	<!-- //////////////////////////////////////////////////// CALIBRATION //////////////////////////////////////////////////// -->
+
+
+  	<group ns="calib_CT_1">
+		<arg name="calibration_name" default="d415_R_franka_calib1"/>
+
+		<param name="tf_prefix" value="calib_CT_1"></param>
+		<param name="frame_id" value="$(arg camera_1_name)_link" />
+		<param name="ar_marker_frame" value="aruco_CT_1/aruco_marker_frame" />
+		<param name="child_frame_id" value="setup1/panda_link0" />
+		<param name="calibrator_frame" value="setup1/calibrator_10"/>
+		<param name="calibration_name" value="$(arg calibration_name)"/>
+    	<node name="franka_arm_d415_calibrator_1" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
+    </group>
+
+    <!-- launch rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find calibration)/config/test_calibrator.rviz" required="true" output="screen" />
+
+
+</launch>

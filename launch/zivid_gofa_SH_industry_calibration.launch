@@ -1,0 +1,52 @@
+<launch>
+
+  	<arg name="camera_name"              		default="zivid"/>		<!-- Note: Replace with camera name -->
+
+    
+  
+
+  <include file="$(find zivid_samples)/launch/camera_zivid_calib.launch">	</include>
+
+
+<!-- //////////////////////////////////////////////////// GOFA //////////////////////////////////////////////////// -->
+  	<group ns="setup1">
+      <param name="tf_prefix" value="setup1"></param>
+    	<include file="$(find calibration)/launch/gofa_SH_industry_calibration.launch">
+    		<arg name="robot_ip"         value="192.168.131.200"/>
+   		</include>
+  	</group>
+
+
+<!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
+
+  	<group ns="aruco_CT">
+		<param name="tf_prefix" value="aruco_CT"></param>
+  		<include file="$(find calibration)/launch/single.launch">
+    		<arg name="markerId"        	value="57"/>
+			  <arg name="markerSize"      	value="0.05"/> 
+    		<arg name="marker_frame"    	value="aruco_CT/aruco_marker_frame"/>
+  			<arg name="camera_info_topic"	value="/$(arg camera_name)/color/camera_info"/>
+  			<arg name="image_topic"			value="/$(arg camera_name)/color/image_rect_color"/>
+  			<arg name="camera_frame"		value="$(arg camera_name)_optical_frame"/>
+  			<arg name="corner_refinement" 	value="LINES" />
+    	</include>
+  	</group>
+
+
+  	<!-- //////////////////////////////////////////////////// CALIBRATION //////////////////////////////////////////////////// -->
+
+
+  	<group ns="calib_CT">
+		<arg name="calibration_name" default="zivid_gofa_calib1"/>
+
+		<param name="tf_prefix" value="calib_CT"></param>
+		<param name="frame_id" value="$(arg camera_name)_optical_frame" />
+		<param name="ar_marker_frame" value="aruco_CT/aruco_marker_frame" />
+		<param name="child_frame_id" value="setup1/base" />
+		<param name="calibrator_frame" value="setup1/calibrator_softhand_industry"/>
+		<param name="calibration_name" value="$(arg calibration_name)"/>
+    <node name="gofa_arm_zivid_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
+    </group>
+
+
+</launch>

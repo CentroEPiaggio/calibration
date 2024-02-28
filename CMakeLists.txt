@@ -17,9 +17,8 @@ find_package(catkin REQUIRED
 
 ## System dependencies are found with CMake's conventions
 #find_package(Boost REQUIRED COMPONENTS system)
-find_package(Eigen REQUIRED)
-#fix path for eigen
-set(EIGEN_DIR "/home/alessandro/eigen-3.3.7")
+# find_package(Eigen REQUIRED)
+# set(EIGEN_DIR "/../eigen-3.3.7")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -100,8 +99,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(include
-  ${EIGEN_DIR}
+#   ${EIGEN_DIR}
   ${catkin_INCLUDE_DIRS}
+  include/eigen-3.3.7
 )
 
 ## Declare a cpp library
@@ -116,6 +116,9 @@ target_link_libraries(simple_calibrator ${catkin_LIBRARIES})
 add_executable(average_calibrator src/average_calibrator.cpp)
 target_link_libraries(average_calibrator ${catkin_LIBRARIES})
 
+add_executable(average_calibrator_old src/average_calibrator_old.cpp)
+target_link_libraries(average_calibrator_old ${catkin_LIBRARIES})
+
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(calibration_node calibration_generate_messages_cpp)
@@ -126,28 +129,28 @@ target_link_libraries(average_calibrator ${catkin_LIBRARIES})
 # )
 
 # declare the source files that contains your executable code
-add_executable(calibration_test
-  test/calibration_test.cpp
-)
-add_executable(calibration_test_noise
-  test/calibration_test_noise.cpp
-)
+# add_executable(calibration_test
+#   test/calibration_test.cpp
+# )
+# add_executable(calibration_test_noise
+#   test/calibration_test_noise.cpp
+# )
 
 # declare any dependencies that need to be built before compiling your executable
-add_dependencies(calibration_test
-  calibration
-)
-add_dependencies(calibration_test_noise
-  calibration
-)
+# add_dependencies(calibration_test
+#   calibration
+# )
+# add_dependencies(calibration_test_noise
+#   calibration
+# )
 
-# declare the libraries your executable needs to be linked against to
-target_link_libraries (calibration_test
-  calibration
-)
-target_link_libraries (calibration_test_noise
-  calibration
-)
+# # declare the libraries your executable needs to be linked against to
+# target_link_libraries (calibration_test
+#   calibration
+# )
+# target_link_libraries (calibration_test_noise
+#   calibration
+# )
 
 #############
 ## Install ##

@@ -1,0 +1,55 @@
+<launch>
+
+  	<arg name="camera_name"              		default="camera"/>		<!-- Note: Replace with camera name -->
+  	<!-- <arg name="serial_no_camera_name"    		default="f0233232"/> 		 -->
+  
+
+    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+		<arg name="camera" 	value="$(arg camera_name)" />
+	</include>
+
+
+<!-- //////////////////////////////////////////////////// FRANKA //////////////////////////////////////////////////// -->
+<!--   	<group ns="setup1">
+		<param name="tf_prefix" value="setup1"></param>
+    	<include file="$(find calibration)/launch/franka_SH_industry_calibration.launch">
+    		<arg name="robot_ip"         value="172.16.0.102"/>
+   		</include>
+  	</group> -->
+
+<!--   <node pkg="tf" type="static_transform_publisher" name="ee_to_calibrator_tf" args="0.025279 0.025279 0.0285 -0.6532815, 0.2705981, -0.2705981, 0.6532815  wrist_3_link calibrator 10" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="ee_to_calibrator_tf" args="0.025279 0.025279 0.0285 -0.7853983 -1.5707963    -1.5707963 wrist_3_link calibrator 10" />
+
+<!-- //////////////////////////////////////////////////// ARUCO //////////////////////////////////////////////////// -->
+
+  	<group ns="aruco_CT">
+		<param name="tf_prefix" value="aruco_CT"></param>
+  		<include file="$(find calibration)/launch/single.launch">
+    		<arg name="markerId"        	value="57"/>
+			<arg name="markerSize"      	value="0.05"/>  
+    		<arg name="marker_frame"    	value="aruco_CT/aruco_marker_frame"/>
+  			<arg name="camera_info_topic"	value="/$(arg camera_name)/color/camera_info"/>
+  			<arg name="image_topic"			value="/$(arg camera_name)/color/image_rect_color"/>
+  			<arg name="camera_frame"		value="$(arg camera_name)_color_optical_frame"/>
+  			<arg name="corner_refinement" 	value="LINES" />
+    	</include>
+  	</group>
+
+
+  	<!-- //////////////////////////////////////////////////// CALIBRATION //////////////////////////////////////////////////// -->
+
+
+  	<group ns="calib_CT">
+		<arg name="calibration_name" default="d415_UR_calib1"/>
+
+		<param name="tf_prefix" value="calib_CT"></param>
+		<param name="frame_id" value="$(arg camera_name)_color_optical_frame" />
+		<param name="ar_marker_frame" value="aruco_CT/aruco_marker_frame" />
+		<param name="child_frame_id" value="base_link" />
+		<param name="calibrator_frame" value="calibrator"/>
+		<param name="calibration_name" value="$(arg calibration_name)"/>
+    	<node name="franka_arm_d415_calibrator" pkg="calibration" type="average_calibrator" respawn="true" output="screen"/>
+    </group>
+
+
+</launch>

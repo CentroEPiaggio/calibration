@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="calibrator_pandagripper" params="parent name *origin">
+  <joint name="${parent}_${name}_base_joint" type="fixed">
+    <xacro:insert_block name="origin"/>
+    <parent link="${parent}"/>
+    <child link="${name}_mesh"/>
+  </joint>
+  <link name="${name}_mesh">
+<!--     <visual>
+      <geometry>
+        <mesh filename="package://franka_description/meshes/camera_robot_calibrator.stl"/>
+      </geometry>
+      <material name="Vito/Silver"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://franka_description/meshes/camera_robot_calibrator.stl"/>
+      </geometry>
+    </collision> -->
+  </link>
+
+  <!-- this is where the ar marker is w.r.t. the mesh, known from CAD model -->
+  <joint name="${name}_joint" type="fixed">
+<!--     <origin xyz="-0.04 0 0" rpy="0 0 1.57079633"/>-->    
+    <origin xyz="-0.025279067 0.025279067 0.028500000" rpy="0 -1.5708 -0.7853982"/>
+    <!-- <origin xyz="-0.025279067 0.025279067 0.028500000" rpy="-1.5708 -0.7853982 1.5708"/> -->
+    <parent link="${name}_mesh"/>
+    <child link="${name}"/>
+  </joint>
+  <link name="${name}"/>
+</xacro:macro>
+
+</robot>

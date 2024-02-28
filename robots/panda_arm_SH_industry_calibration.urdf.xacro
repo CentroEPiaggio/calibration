@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro" />
+  <xacro:include filename="$(find calibration)/model/calibrator_softhand_industry.urdf.xacro"/>
+  <xacro:panda_arm />
+
+  <!-- from the CAD model, the frame coincides with the 7-th link -->
+  <xacro:calibrator_softhand_industry name="calibrator_softhand_industry" parent="panda_link8">
+    <origin xyz="0 0 -0.0065" rpy="1.5707963 0.0 -1.5707963"/>
+    <!-- <origin xyz="-0.006 0 0" rpy=" 0 3.1415927 -1.5707963"/> -->
+  </xacro:calibrator_softhand_industry>
+
+
+</robot>
